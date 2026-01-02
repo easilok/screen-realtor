@@ -1,3 +1,4 @@
+CONTAINER=docker
 BUILD_FLAGS ?=
 
 all: bin
@@ -5,7 +6,14 @@ all: bin
 bin: clean
 	sbcl $(BUILD_FLAGS) --load build.lisp
 
-clean:
-	rm -f *.fasl lp-displayer
+release: clean
+	mkdir -p release
+	$(CONTAINER) build -f ./docker/Dockerfile \
+		--target binary \
+		--output type=local,dest=release .
 
-.PHONY: bin run clean
+clean:
+	-rm -f *.fasl lp-displayer
+	-rm -fr release
+
+.PHONY: bin run release clean
