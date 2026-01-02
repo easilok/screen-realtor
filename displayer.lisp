@@ -28,7 +28,13 @@
   "Loop for configured rules to check the one that matches the current system state"
   (loop for rule in rules
         when (funcall (rule-predicate rule) state)
-          return (rule-layout rule)
+          do (let ((layout (gethash (rule-layout rule) *layouts*)))
+               (when layout
+                 ;; Ensure a layout is only applied if there is enough connected outputs
+                 (if (<= (length (output-configurations layout))
+                         (length (system-outputs-connected state)))
+                     (return (rule-layout rule))
+                     (format t "Skipping layout '~a' due to insufficient available outputs.~%" layout))))
         finally (error "No matching rule")))
 
 (defun apply-layout (layout state &key (dry-run nil))
@@ -64,7 +70,8 @@
     (unless repl
       (if layout
           (apply-layout layout system-state :dry-run dry-run)
-          (apply-layout (apply-rules *rules* system-state) system-state :dry-run dry-run)))
+          (apply-layout (apply-rules *rules* system-state) system-state :dry-run dry-run))
+      (sb-ext:exit))
 
     (when repl
         (slynk:create-server :port 4009 :dont-close t)

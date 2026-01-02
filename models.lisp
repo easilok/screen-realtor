@@ -50,3 +50,9 @@
 (defun no-wifi ()
   "Helper for checking if system is not connected to an wifi"
   (lambda (state) (null (system-wifi state))))
+
+(defun system-outputs-connected (state)
+  "Gets current connected outputs on the system"
+  (remove-if-not (lambda (out)
+                   (output-connected-p out))
+                 (system-outputs state)))
