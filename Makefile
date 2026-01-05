@@ -9,6 +9,7 @@ bin: clean
 release: clean
 	mkdir -p release
 	$(CONTAINER) build -f ./docker/Dockerfile \
+		--no-cache \
 		--target binary \
 		--output type=local,dest=release .
 
