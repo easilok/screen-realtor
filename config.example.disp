@@ -1,0 +1,61 @@
+;; -*- mode: lisp -*-
+
+;; ####################
+;; Layout definitions
+;; ####################
+
+;; Laptop only
+(define-layout laptop-only
+  ((output (name= "eDP-1")
+           :mode (1920 1200 120)
+           :position (0 0)
+           :primary t)))
+
+;; Laptop + external top
+(define-layout external-top
+  ((output (name= "eDP-1")
+           :mode (1920 1200 120)
+           :position (0 1080)
+           :primary t)
+   (output (not-name= "eDP-1")
+           :mode (1920 1080)
+           :position (0 0))))
+
+;; Laptop + external left
+(define-layout external-left
+  ((output (name= "eDP-1")
+           :mode (1920 1200 120)
+           :position (1600 0)
+           :primary t)
+   (output (not-name= "eDP-1")
+           :mode (1600 900)
+           :position (0 0))))
+
+;; Presentation layout
+(define-layout presentation
+  ((output (name= "eDP-1")
+           :mode (1920 1200 120)
+           :position (0 0)
+           :primary t)
+   (output (not-name= "eDP-1")
+           :mode (1920 1080)
+           :position (0 0))))
+
+;; ##################
+;; Rule definitions
+;; ##################
+
+;; Fallback to laptop only
+(define-rule default-layout
+  :predicate (lambda (state) t) ;; default rule
+  :layout laptop-only)
+
+;; When connected WiFi-Example-1, use laptop + external top monitor if possible
+(define-rule top-layout-1
+  :predicate (wifi= "WiFi-Example-1")
+  :layout external-top)
+
+;; When connected to WiFi-Example-2, use laptop + external left monitor if possible
+(define-rule left-layout-1
+  :predicate (wifi= "WiFi-Example-2")
+  :layout external-left)
