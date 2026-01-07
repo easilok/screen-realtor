@@ -47,7 +47,7 @@
 
 ;; Fallback to laptop only
 (define-rule default-layout
-  :predicate (lambda (state) t) ;; default rule
+  ;; no predicate for default rule
   :layout laptop-only)
 
 ;; When connected WiFi-Example-1, use laptop + external top monitor if possible

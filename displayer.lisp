@@ -27,7 +27,7 @@
 (defun apply-rules (rules state)
   "Loop for configured rules to check the one that matches the current system state"
   (loop for rule in rules
-        when (funcall (rule-predicate rule) state)
+        when (rule-applies-p rule state)
           do (let ((layout (gethash (rule-layout rule) *layouts*)))
                (when layout
                  ;; Ensure a layout is only applied if there is enough connected outputs
@@ -51,6 +51,13 @@
           cmd
           (run-command cmd)))))
 
+(defun manage-layout (&key (layout nil) (dry-run nil))
+  "Updates system layout to the provided one or automatically if nil"
+  (let ((system-state (collect-system-state)))
+    (if layout
+        (apply-layout layout system-state :dry-run dry-run)
+        (apply-layout (apply-rules *rules* system-state) system-state :dry-run dry-run))))
+
 (defun main (&optional args)
   "Application entrypoint. Parses rules and layouts configuration and user commands."
   (let* ((args (or args (uiop:command-line-arguments)))
@@ -59,18 +66,14 @@
                                       :default (resolve-config-file)))
          (layout (get-cli-option args "--layout"))
          (dry-run (get-cli-option args "--dry-run" :boolean t))
-         (repl (get-cli-option args "--repl" :boolean t))
-         (system-state (collect-system-state)))
+         (repl (get-cli-option args "--repl" :boolean t)))
 
     ;; Load config in dsl language
     (load-config-file config-file)
 
-
-    ;; Apply provided layout or select one from rules
+    ;; Run the manager for updating the layout if not in repl mode
     (unless repl
-      (if layout
-          (apply-layout layout system-state :dry-run dry-run)
-          (apply-layout (apply-rules *rules* system-state) system-state :dry-run dry-run))
+      (manage-layout :layout layout :dry-run dry-run)
       (sb-ext:exit))
 
     (when repl

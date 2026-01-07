@@ -27,10 +27,34 @@
    (outputs :initarg :outputs :reader output-configurations)))
 
 (defclass rule ()
-  ;; (:documentation "Model for a rule that triggers a specific display output layout")
+  ; (:documentation "Model for a rule that triggers a specific display output layout")
   ((name      :initarg :name :reader rule-name)
    (predicate :initarg :predicate :reader rule-predicate)
    (layout    :initarg :layout :reader rule-layout)))
+
+(defmethod print-object ((object layout) stream)
+  (print-unreadable-object (object stream :type t)
+    (with-slots (name outputs) object
+      (format stream "~s (~d outputs)" name (length outputs)))))
+
+(defmethod print-object ((object rule) stream)
+  (print-unreadable-object (object stream :type t)
+    (with-slots (name) object
+      (format stream "~s" name ))))
+
+(defmethod print-object ((object output) stream)
+  (print-unreadable-object (object stream :type t)
+    (with-slots (name connected-p) object
+      (format stream "~s (~s)" name (if connected-p "connected" "disconnected")))))
+
+(defgeneric rule-applies-p (rule state)
+  (:documentation "Evaluates if a rule applies to the provided system state"))
+
+(defmethod rule-applies-p ((rule rule) (state system-state))
+  (let ((predicate (rule-predicate rule)))
+    (if predicate
+        (funcall predicate state)
+        t)))
 
 (defun name= (string)
   "Helper selector for getting an output with the specified name"

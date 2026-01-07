@@ -76,10 +76,9 @@ The following example defines a rule that sets the `external-top` layout when th
   :layout external-top)
 ```
 
-The following rule defines a catch all that will always set the `laptop-only` layout (and it should be the last rule):
+The following rule defines a catch all that will always set the `laptop-only` layout as it has no predicate (and because of that it should always be the last rule):
 
 ``` lisp
 (define-rule default-layout
-  :predicate (lambda (state) t)
   :layout laptop-only)
 ```
