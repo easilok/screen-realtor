@@ -31,3 +31,30 @@
 
      (push rule *rules*)
      rule))
+
+(defun parse-layout-output-config (configs)
+  (dolist (out-config configs)
+    (destructuring-bind (type name-predicate &rest options) out-config
+      (format t "output details -> type: ~a; pred: ~a; options: ~a~%" type name-predicate (getf options :mode))
+    )))
+
+(defun parse-layout-config (config)
+  (unless (and (listp config) (> (length config) 2))
+    (error "define-layout rule has an invalid format. Check documentation for proper configuration."))
+  (destructuring-bind (_ name outputs) config
+    (declare (ignore _))
+    (format t "Received layout with name: ~a and outputs ~a~%" name (length outputs))
+    (parse-layout-output-config outputs)))
+
+(defun parse-rule-config (config)
+  (format t "Received rule config: ~a~%" config))
+
+(defun parse-config (config)
+  (loop for option in config
+        do (progn
+             (unless (listp option)
+               (error "Config must be a list"))
+             (case (first option)
+               (define-layout (parse-layout-config option))
+               (define-rule (parse-rule-config option))
+               (otherwise (format t "Unknown option '~a'~%" (first option)))))))

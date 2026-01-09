@@ -6,6 +6,20 @@
   "Builds a list of known locations for configuration files"
   `(,(merge-pathnames ".config/displayer/config.disp" (user-homedir-pathname)) "config.disp"))
 
+(defun read-config-file (&optional path)
+  "Reads the config file as lisp data forms"
+  (let ((*read-eval* nil))
+    (with-open-file (s path)
+      (loop for form = (read s nil)
+            while form
+            collect form))))
+
+
+(defun load-config (&optional (file-path "config.disp"))
+  "Loads and parses the configuration file into the application"
+  (let ((config (read-config-file file-path)))
+    config))
+
 (defun load-config-file (&optional (file-path "config.disp"))
   "Loads and parses the configuration file into the application"
   (load file-path)
