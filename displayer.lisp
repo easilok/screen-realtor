@@ -4,6 +4,7 @@
 
 (defparameter *layouts* (make-hash-table))
 (defparameter *rules* '())
+(defparameter *layout-triggers* (make-hash-table))
 
 (defun collect-system-state ()
   "Parses current system state information"
@@ -51,12 +52,20 @@
           cmd
           (run-command cmd)))))
 
+(defun run-layout-trigger-actions (trigger-actions)
+  "Execute list of a layout trigger actions"
+  (dolist (trigger-action trigger-actions)
+    (with-slots (type action) trigger-action
+      (run-trigger-action type action))))
+
 (defun manage-layout (&key (layout nil) (dry-run nil))
   "Updates system layout to the provided one or automatically if nil"
   (let ((system-state (collect-system-state)))
+    (run-layout-trigger-actions (gethash 'before-layout *layout-triggers*))
     (if layout
-        (apply-layout layout system-state :dry-run dry-run)
-        (apply-layout (apply-rules *rules* system-state) system-state :dry-run dry-run))))
+        (apply-layout layout system-state :dry-run dry-run))
+        (apply-layout (apply-rules *rules* system-state) system-state :dry-run dry-run))
+    (run-layout-trigger-actions (gethash 'after-layout *layout-triggers*)))
 
 (defun main (&optional args)
   "Application entrypoint. Parses rules and layouts configuration and user commands."

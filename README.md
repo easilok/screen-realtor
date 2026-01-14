@@ -85,3 +85,19 @@ The following rule defines a catch all that will always set the `laptop-only` la
 ```
 
 **Note:** The rule priority should not be set to a value higher that 99 to allow proper deprioritization of rules with no priority set.
+
+
+### define-trigger
+
+Define specific custom actions that are executed on triggers from layout changes. There are two possible triggers at the moment:
+
+- `before-layout`, that can contain a list of actions to be called when the application is about to perform a layout update
+- `after-layout`, that can contain a list of actions to be called after the application applies a new layout
+
+The following example defines a trigger which actions will be called after a layout is set. This example has two actions that are run sequentially.
+
+```lisp
+(define-trigger after-layout
+ ((run-shell :action "set-my-wallpaper")
+  (run-shell :action "notify-send 'Layout Updated'")))
+```

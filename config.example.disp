@@ -61,3 +61,11 @@
 (define-rule default-layout
   ;; no predicate for default rule
   :layout laptop-only)
+
+;; Add trigger for when layout is about to be set
+(define-trigger before-layout
+ ((run-shell :action "set-my-wallpaper")))
+
+;; Add trigger for when layout is set
+(define-trigger after-layout
+ ((run-shell :action "set-my-wallpaper")))

@@ -31,3 +31,18 @@
 
      (push rule *rules*)
      rule))
+
+
+(defmacro run-shell (&key action)
+  "Parses a trigger action of type run-shell"
+  `(make-instance 'trigger-action
+    :type 'run-shell
+    :action ,action))
+
+(defmacro define-trigger (name actions)
+  "Parses trigger definitions from the DSL configuration"
+  (ecase name
+    ('before-layout `(dolist (action (list ,@actions))
+                       (push action (gethash ',name *layout-triggers*))))
+    ('after-layout `(dolist (action (list ,@actions))
+                       (push action (gethash ',name *layout-triggers*))))))
