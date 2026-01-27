@@ -1,6 +1,6 @@
 ;;;; dsl.lisp
 
-(in-package #:lp-displayer)
+(in-package #:screen-realtor)
 
 (defmacro output (selector &key mode position primary)
   "Parses an output configuration from the DSL configuration file into it's own object instance"

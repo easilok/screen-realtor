@@ -1,4 +1,4 @@
-(in-package #:lp-displayer)
+(in-package #:screen-realtor)
 
 (defun ensure-symbol (v)
   "Returns the provided value in it's symbol representation if possible"

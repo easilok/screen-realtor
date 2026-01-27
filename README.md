@@ -1,8 +1,8 @@
-# Displayer - Display output manage
+# Screen Realtor - Screen output manage
 
 ## Introduction
 
-*Displayer* is a personal display output manager that, provided a configuration, can automatically select the preferred layout configuration of the outputs connected to a Linux system using X11.
+*Screen Realtor* is a personal display output manager that, provided a configuration, can automatically select the preferred layout configuration of the outputs connected to a Linux system using X11.
 
 It's written in common lisp, as part of my language learning journey.
 
@@ -36,7 +36,7 @@ repository.
 
 ## Configuration
 
-Configuration is done into a `config.disp` file that can be placed in your `~/.config/displayer/`.
+Configuration is done into a `config.disp` file that can be placed in your `~/.config/screen-realtor/`.
 
 The configuration layout follows a lisp syntax and leverages two different calls: `define-layout` and `define-rule`. Refer to the provided [config.example.disp](./config.example.disp) example and make it yours.
 

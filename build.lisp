@@ -1,15 +1,15 @@
 ;;;; build.lisp
 
-(load "displayer.asd")
+(load "realtor.asd")
 
-(ql:quickload :lp-displayer)
+(ql:quickload :screen-realtor)
 
 (defun entry ()
   "Application entrypoint forcing it to run inside package namespace"
-  (setf *package* (find-package :lp-displayer))
-  (lp-displayer:main))
+  (setf *package* (find-package :screen-realtor))
+  (screen-realtor:main))
 
-(sb-ext:save-lisp-and-die "lp-displayer"
+(sb-ext:save-lisp-and-die "screen-realtor"
                    :executable t
                    :compression 9
                    :toplevel #'entry)

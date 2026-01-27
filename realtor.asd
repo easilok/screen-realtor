@@ -1,7 +1,7 @@
-;; displayer.asd
+;; realtor.asd
 
-(asdf:defsystem #:lp-displayer
-  :description "X11 display layout configuratior"
+(asdf:defsystem #:screen-realtor
+  :description "X11 screen layout configuratior"
   :author "Luis Pereira"
   :license  "WTFPL"
   :version "0.0.1"
@@ -16,4 +16,4 @@
    (:file "system")
    (:file "config-utils")
    (:file "dsl")
-   (:file "displayer")))
+   (:file "realtor")))

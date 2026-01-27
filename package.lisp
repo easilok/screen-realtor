@@ -1,6 +1,6 @@
 ;;;; package.lisp
 
-(defpackage #:lp-displayer
+(defpackage #:screen-realtor
   (:use :cl)
   (:export
    ;; Entrypoint

@@ -1,10 +1,10 @@
 ;;;; config-utils.lisp
 
-(in-package #:lp-displayer)
+(in-package #:screen-realtor)
 
 (defun config-filepaths ()
   "Builds a list of known locations for configuration files"
-  `(,(merge-pathnames ".config/displayer/config.disp" (user-homedir-pathname)) "config.disp"))
+  `(,(merge-pathnames ".config/screen-realtor/config.disp" (user-homedir-pathname)) "config.disp"))
 
 (defun load-config-file (&optional (file-path "config.disp"))
   "Loads and parses the configuration file into the application"

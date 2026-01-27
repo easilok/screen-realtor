@@ -1,9 +1,9 @@
 ;;;; run.lisp
 
-(load "displayer.asd")
+(load "realtor.asd")
 
-(ql:quickload :lp-displayer)
+(ql:quickload :screen-realtor)
 
-(in-package #:lp-displayer)
+(in-package #:screen-realtor)
 
-(lp-displayer:main)
+(screen-realtor:main)

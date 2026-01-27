@@ -1,6 +1,6 @@
-;;;; displayer.lisp
+;;;; realtor.lisp
 
-(in-package #:lp-displayer)
+(in-package #:screen-realtor)
 
 (defparameter *layouts* (make-hash-table))
 (defparameter *rules* '())

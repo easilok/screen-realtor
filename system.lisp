@@ -1,6 +1,6 @@
 ;;;; system.lisp
 
-(in-package #:lp-displayer)
+(in-package #:screen-realtor)
 
 (defun parse-xrandr ()
   "Parser for the xrandr information"

@@ -19,4 +19,4 @@ RUN sbcl --no-userinit --no-sysinit --non-interactive \
 # Stage 2: build the binary
 FROM scratch AS binary
 
-COPY --from=builder /build/lp-displayer /
+COPY --from=builder /build/screen-realtor /

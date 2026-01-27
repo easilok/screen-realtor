@@ -14,7 +14,7 @@ release: clean
 		--output type=local,dest=release .
 
 clean:
-	-rm -f *.fasl lp-displayer
+	-rm -f *.fasl screen-realtor
 	-rm -fr release
 
 .PHONY: bin run release clean

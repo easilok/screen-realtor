@@ -1,6 +1,6 @@
 ;;;; conditions.lisp
 
-(in-package #:lp-displayer)
+(in-package #:screen-realtor)
 
 (define-condition display-error (error) ())
 

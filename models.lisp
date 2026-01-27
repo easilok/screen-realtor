@@ -1,6 +1,6 @@
 ;;;; models.lisp
 
-(in-package #:lp-displayer)
+(in-package #:screen-realtor)
 
 ;; System Outputs
 (defclass output ()
