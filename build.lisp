@@ -1,5 +1,6 @@
 ;;;; build.lisp
 
+(load "~/quicklisp/setup.lisp")
 (load "realtor.asd")
 
 (ql:quickload :screen-realtor)
